@@ -70,7 +70,7 @@
     </head>
     <body>
        
-        <h1>Bienvenido, </h1>
+        <h1>Bienvenido, Administrador </h1>
         <p></p>
         
         <div class="container_btn">

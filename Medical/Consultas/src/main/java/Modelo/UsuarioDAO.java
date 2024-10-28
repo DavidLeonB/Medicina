@@ -1,4 +1,3 @@
-
 package Modelo;
 
 import java.sql.Connection;
@@ -11,13 +10,12 @@ public class UsuarioDAO {
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
-    public boolean verificarCredenciales(String nombre, String contrasena) {
-        boolean valido = false;
+    public Usuario verificarCredenciales(String nombre, String contrasena) {
         String sql = "SELECT * FROM usuarios WHERE nombre = ? AND contrasena = ?";
+        Usuario usuario = null;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-
             try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
                  
@@ -25,12 +23,14 @@ public class UsuarioDAO {
                 stmt.setString(2, contrasena);
                 ResultSet rs = stmt.executeQuery();
                 
-                valido = rs.next(); 
+                if (rs.next()) {
+                    usuario = new Usuario(rs.getString("nombre"), rs.getString("contrasena")); // Ajusta si tienes más campos
+                }
                 
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return valido;
+        return usuario;
     }
 }

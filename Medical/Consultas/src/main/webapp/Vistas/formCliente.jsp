@@ -7,6 +7,14 @@
 <%@page import="java.sql.SQLException"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="javax.servlet.http.HttpSession"%>
+<%@ page import="Modelo.Usuario" %>
+<%
+    Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+    if (usuario == null) {
+        response.sendRedirect("Vistas/ErrorCredenciales.jsp");
+        return;
+    }
+%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -202,7 +210,7 @@
 
    
     <div class="saludo">
-        <h1>Bienvenido, </h1>  
+       <h1>Bienvenido, <%= usuario.getNombre() %>!</h1>  
         <h4>Estamos felices de que estés con nosotros, aquí puedes Consultar, Generar, Separar tus medicamentos.</h4>
         
         <div class="btnSaludo">

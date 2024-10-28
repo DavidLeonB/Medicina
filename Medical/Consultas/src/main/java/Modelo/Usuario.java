@@ -1,5 +1,3 @@
-
-
 package Modelo; // Declara el paquete donde se encuentra la clase
 
 // Clase que representa a un usuario del sistema
@@ -24,4 +22,3 @@ public class Usuario {
         return contrasena; // Retorna la contraseña del usuario
     }
 }
-
