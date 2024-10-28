@@ -11,7 +11,7 @@
 <%
     Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
     if (usuario == null) {
-        response.sendRedirect("Vistas/ErrorCredenciales.jsp");
+        response.sendRedirect("ErrorCredenciales.jsp");
         return;
     }
 %>
@@ -195,9 +195,9 @@
             .container_btn input:hover,
             .actualizaciones input:hover,
             .saludo input:hover {
-                background-color: var(--aqua);
+                background-color: aqua;
                 border: var(--azul_oscuro);
-                color: var(--azul_oscuro);
+                color: #0315af;
                 font-size: 1.3rem;
                 box-shadow: 10px 10px 10px rgba(83, 87, 100, 0.4);
             }
