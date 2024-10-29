@@ -41,6 +41,7 @@ public class UsuarioServlet extends HttpServlet {
 
         try {
             UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
+            request.getSession().setAttribute("usuarioDAO", usuarioDAO); // Almacena usuarioDAO en la sesión
             
             // Verificar el usuario y la contraseña
             Usuario usuario = usuarioDAO.verificarUsuario(nombre, contrasena);

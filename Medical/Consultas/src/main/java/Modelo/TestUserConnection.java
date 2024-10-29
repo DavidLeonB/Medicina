@@ -22,6 +22,13 @@ public class TestUserConnection {
 
             if (usuario != null) {
                 System.out.println("Usuario autenticado: " + usuario.getNombre());
+                
+                // Obtener y mostrar el nombre de la EPS y la IPS
+                String nombreEPS = usuarioDAO.obtenerNombreEPS(usuario.getIdEPS());
+                String nombreIPS = usuarioDAO.obtenerNombreIPS(usuario.getIdIPS());
+                
+                System.out.println("EPS: " + nombreEPS);
+                System.out.println("IPS: " + nombreIPS);
             } else {
                 System.out.println("Credenciales inválidas para el usuario: " + nombre);
             }

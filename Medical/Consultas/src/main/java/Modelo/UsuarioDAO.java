@@ -77,4 +77,64 @@ public class UsuarioDAO {
         }
         return null; // Devolver null si no se encuentra el usuario o si ocurre un error
     }
+
+    // Método para obtener el nombre de la EPS a partir de su ID.
+    public String obtenerNombreEPS(int id_eps) {
+        String sql = "SELECT nombre FROM eps WHERE id_eps = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id_eps);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("nombre");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Retornar null si no se encuentra
+    }
+
+    // Método para obtener el nombre de la IPS a partir de su ID.
+    public String obtenerNombreIPS(int id_ips) {
+        String sql = "SELECT nombre FROM ips WHERE id_ips = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id_ips);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getString("nombre");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Retornar null si no se encuentra
+    }
+
+    // Método para actualizar un usuario
+    public boolean actualizarUsuario(Usuario usuario) {
+        String sql = "UPDATE usuarios SET nombre = ?, apellido = ?, telefono = ?, id_eps = ?, id_ips = ?, contrasena = ? WHERE id_usuarios = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, usuario.getNombre());
+            stmt.setString(2, usuario.getApellido());
+            stmt.setString(3, usuario.getTelefono());
+            stmt.setInt(4, usuario.getIdEPS());
+            stmt.setInt(5, usuario.getIdIPS());
+            stmt.setString(6, usuario.getContrasena());
+            stmt.setInt(7, usuario.getId());
+            return stmt.executeUpdate() > 0; // Retorna true si se actualizó al menos una fila
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Retornar false si hubo error
+        }
+    }
+
+    // Método para eliminar un usuario
+    public boolean eliminarUsuario(int id) {
+        String sql = "DELETE FROM usuarios WHERE id_usuarios = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            return stmt.executeUpdate() > 0; // Retorna true si se eliminó al menos una fila
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Retornar false si hubo error
+        }
+    }
 }

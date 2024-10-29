@@ -8,13 +8,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import="javax.servlet.http.HttpSession"%>
 <%@ page import="Modelo.Usuario" %>
-<%
-    Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
-    if (usuario == null) {
-        response.sendRedirect("ErrorCredenciales.jsp");
-        return;
-    }
+<%@ page import="Modelo.UsuarioDAO" %>
+<% 
+    UsuarioDAO usuarioDAO = (UsuarioDAO) session.getAttribute("usuarioDAO");
+    Usuario usuario = (Usuario) session.getAttribute("usuario");
 %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -221,27 +220,28 @@
 
         <div class="perfil" id="perfil" style="display: none;">
             <div class="datos">
-                <div>
-                    <p>Nombre</p>
-                    <input type="text" value="" name="txtnombre" disabled />
-                </div>
-                <div>
-                    <p>Apellido</p>
-                    <input type="text" value="" name="txtapellido" disabled />
-                </div>
-                <div>
-                    <p>Teléfono</p>
-                    <input type="text" value="" name="txttelefono" disabled />
-                </div>
-                <div>
-                    <p>EPS</p>
-                    <input type="text" value="" name="txteps" disabled />
-                </div>
-                <div>
-                    <p>Dispensador de Medicina</p>
-                    <input type="text" value="" name="txtips" disabled />
-                </div>
-            </div>
+    <div>
+        <p>Nombre</p>
+        <input type="text" value="<%= usuario.getNombre() %>" name="txtnombre" disabled />
+    </div>
+    <div>
+        <p>Apellido</p>
+        <input type="text" value="<%= usuario.getApellido() %>" name="txtapellido" disabled />
+    </div>
+    <div>
+        <p>Teléfono</p>
+        <input type="text" value="<%= usuario.getTelefono() %>" name="txttelefono" disabled />
+    </div>
+    <div>
+        <p>EPS</p>
+        <input type="text" value="<%= usuarioDAO.obtenerNombreEPS(usuario.getIdEPS()) %>" name="txteps" disabled />
+    </div>
+    <div>
+        <p>Dispensador de Medicina</p>
+        <input type="text" value="<%= usuarioDAO.obtenerNombreIPS(usuario.getIdIPS()) %>" name="txtips" disabled />
+    </div>
+</div>
+
             <div class="actualizaciones">
                 <div class="acciones">
                     <input class="actualizar" type="button" value="Actualizar Datos" onclick="habilitarInputs()" />
@@ -279,7 +279,7 @@
 
         <script>
             function habilitarInputs() {
-                const inputs = document.querySelectorAll('.datos input[type="text"]:not([name="txteps"]):not([name="txtips"])');
+                const inputs = document.querySelectorAll('.datos input[type="text"]:not([name="txteps"]):not([name="txtips"]):not([name="txtnombre"]):not([name="txtapellido"])');
                 inputs.forEach(input => {
                     input.disabled = false; // Habilitar input
                 });
