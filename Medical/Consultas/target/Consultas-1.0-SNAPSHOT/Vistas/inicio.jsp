@@ -95,7 +95,7 @@
                     <p class="datos">Ingresa tus datos</p> <!-- Mensaje que indica que se ingresen datos -->
                     
                     <!-- Formulario de inicio de sesión -->
-                    <form action="${pageContext.request.contextPath}/svLogin" method="POST" class="form"> <!-- Acción del formulario hacia el servlet -->
+                    <form action="${pageContext.request.contextPath}/UsuarioServlet" method="POST" class="form"> <!-- Acción del formulario hacia el servlet -->
                         <input type="hidden" name="accion" value="verificar" /> <!-- Campo oculto para la acción de verificar -->
                         
                         <i class="bx bxs-user"></i> <!-- Ícono para el nombre -->
