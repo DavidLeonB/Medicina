@@ -309,10 +309,13 @@
                 document.getElementById('container_btn').style.display = 'flex';
             });
 
-            document.getElementById('btnCerrarSesion').addEventListener('click', function () {
-                window.location.href = '/Medicamentos/cerrar-sesion'; // Asegúrate de que sea esta URL
-            });
+             document.getElementById('btnCerrarSesion').addEventListener('click', function () {
+        window.location.href = '/Consultas/cerrar-sesion'; // Asegúrate de que sea esta URL
+    });
 
+document.getElementById('btnCerrarSesion').addEventListener('click', function () {
+    window.location.href = '/Consultas/cerrar-sesion'; // Asegúrate de que sea esta URL
+});
 
             /*
              document.getElementById('btnPerfil').addEventListener('click', function () {
