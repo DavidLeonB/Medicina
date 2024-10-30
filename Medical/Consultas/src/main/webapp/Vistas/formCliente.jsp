@@ -245,8 +245,8 @@
             <div class="actualizaciones">
                 <div class="acciones">
                     <input class="actualizar" type="button" value="Actualizar Datos" onclick="habilitarInputs()" />
-                    <input class="guardarCambios" type="submit" value="Guardar Cambios" />
-                    <input class="cerrarSesion" type="button" id="btnCerrarSesion" value="Cerrar Sesión" />
+            <input class="guardarCambios" type="button" value="Guardar Cambios" onclick="guardarCambios()" />
+            <input class="cerrarSesion" type="button" id="btnCerrarSesion" value="Cerrar Sesión" />
                 </div>
             </div>
         </div>
@@ -316,6 +316,30 @@
 document.getElementById('btnCerrarSesion').addEventListener('click', function () {
     window.location.href = '/Consultas/cerrar-sesion'; // Asegúrate de que sea esta URL
 });
+
+
+ function guardarCambios() {
+        const telefono = document.getElementById('txttelefono').value;
+        const usuarioId = <%= usuario.getId() %>; // Obtener ID del usuario desde el servidor
+
+        fetch('/Consultas/TelefonoServlet', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `telefono=${telefono}&id_usuarios=${usuarioId}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message); // Mostrar mensaje de éxito o error
+            if (data.success) {
+                document.getElementById('txttelefono').disabled = true; // Deshabilitar de nuevo el input
+            }
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
+        });
+    }
 
             /*
              document.getElementById('btnPerfil').addEventListener('click', function () {

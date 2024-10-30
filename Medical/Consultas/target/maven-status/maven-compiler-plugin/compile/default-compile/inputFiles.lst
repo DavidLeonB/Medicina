@@ -1,6 +1,10 @@
 F:\consultaMedicamentos\Medicina\Medical\Consultas\src\main\java\Modelo\DatabaseConnection.java
 F:\consultaMedicamentos\Medicina\Medical\Consultas\src\main\java\Modelo\Usuario.java
 F:\consultaMedicamentos\Medicina\Medical\Consultas\src\main\java\Modelo\TestUserConnection.java
+F:\consultaMedicamentos\Medicina\Medical\Consultas\src\main\java\Modelo\TelefonoServlet.java
 F:\consultaMedicamentos\Medicina\Medical\Consultas\src\main\java\Modelo\Medicamento.java
+F:\consultaMedicamentos\Medicina\Medical\Consultas\src\main\java\Modelo\ActualizarTelefonoServlet.java
 F:\consultaMedicamentos\Medicina\Medical\Consultas\src\main\java\Modelo\UsuarioServlet.java
 F:\consultaMedicamentos\Medicina\Medical\Consultas\src\main\java\Modelo\UsuarioDAO.java
+F:\consultaMedicamentos\Medicina\Medical\Consultas\src\main\java\Modelo\CerrarSesionServlet.java
+F:\consultaMedicamentos\Medicina\Medical\Consultas\src\main\java\Modelo\Cliente.java

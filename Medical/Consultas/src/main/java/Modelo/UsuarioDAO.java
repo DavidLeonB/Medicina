@@ -137,4 +137,41 @@ public class UsuarioDAO {
             return false; // Retornar false si hubo error
         }
     }
+
+  // Método para actualizar el teléfono por ID
+    public boolean actualizarTelefonoPorId(int idUsuario, String nuevoTelefono) {
+        String sql = "UPDATE usuarios SET telefono = ? WHERE id_usuarios = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, nuevoTelefono);
+            pstmt.setInt(2, idUsuario);
+            return pstmt.executeUpdate() > 0; // Retorna true si se actualizó al menos una fila
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Retornar false si hubo un error
+        }
+    }
+    
+  // Método para buscar un usuario por ID
+    public Usuario buscarUsuarioPorId(int idUsuario) {
+        String sql = "SELECT * FROM usuarios WHERE id_usuarios = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return new Usuario(
+                    rs.getInt("id_usuarios"),
+                    rs.getString("nombre"),
+                    rs.getString("apellido"),
+                    rs.getString("telefono"),
+                    rs.getInt("id_eps"),
+                    rs.getInt("id_ips"),
+                    rs.getString("contrasena")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // Retornar null si no se encontró el usuario
+    }
 }
+
