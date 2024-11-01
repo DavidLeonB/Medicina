@@ -1,75 +1,45 @@
 package Modelo;
 
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import org.json.JSONObject; // Asegúrate de tener la biblioteca JSON en tu proyecto
 
 @WebServlet("/TelefonoServlet")
 public class TelefonoServlet extends HttpServlet {
-    private Connection connection;
+    private static final long serialVersionUID = 1L;
 
-    @Override
-    public void init() throws ServletException {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/medical", "root", "");
-        } catch (Exception e) {
-            throw new ServletException("Error al conectar a la base de datos", e);
-        }
-    }
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        String nuevoTelefono = request.getParameter("nuevoTelefono");
+        String idUsuario = request.getParameter("idUsuario");
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("application/json"); // Establecer el tipo de contenido
-        PrintWriter out = response.getWriter();
-        JSONObject jsonResponse = new JSONObject(); // Crear un objeto JSON para la respuesta
+        String url = "jdbc:mysql://localhost:3306/medical"; // Cambia esto
+        String usuario = "root"; // Cambia esto
+        String contraseña = ""; // Cambia esto
 
-        int idUsuario;
-        String nuevoTelefono;
+        String sql = "UPDATE usuarios SET telefono = ? WHERE id_usuarios = ?";
 
-        try {
-            idUsuario = Integer.parseInt(request.getParameter("id_usuarios"));
-            nuevoTelefono = request.getParameter("telefono");
-
-            UsuarioDAO usuarioDAO = new UsuarioDAO(connection);
-            boolean actualizado = usuarioDAO.actualizarTelefonoPorId(idUsuario, nuevoTelefono);
-
-            if (actualizado) {
-                jsonResponse.put("success", true);
-                jsonResponse.put("message", "Teléfono actualizado con éxito.");
+        try (Connection conn = DriverManager.getConnection(url, usuario, contraseña);
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setString(1, nuevoTelefono);
+            stmt.setString(2, idUsuario);
+            int filasActualizadas = stmt.executeUpdate();
+            
+            if (filasActualizadas > 0) {
+                response.getWriter().write("Teléfono actualizado correctamente.");
             } else {
-                jsonResponse.put("success", false);
-                jsonResponse.put("message", "Error al actualizar el teléfono.");
+                response.getWriter().write("Error al actualizar el teléfono.");
             }
-        } catch (NumberFormatException e) {
-            jsonResponse.put("success", false);
-            jsonResponse.put("message", "ID de usuario inválido.");
         } catch (Exception e) {
             e.printStackTrace();
-            jsonResponse.put("success", false);
-            jsonResponse.put("message", "Error al actualizar el teléfono: " + e.getMessage());
-        }
-
-        out.print(jsonResponse); // Enviar la respuesta JSON
-        out.flush(); // Asegurarse de que se envíe la respuesta
-    }
-
-    @Override
-    public void destroy() {
-        try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+            response.getWriter().write("Error al conectar con la base de datos.");
         }
     }
 }

@@ -138,7 +138,7 @@ public class UsuarioDAO {
         }
     }
 
-  // Método para actualizar el teléfono por ID
+ // Método para actualizar el teléfono por ID
     public boolean actualizarTelefonoPorId(int idUsuario, String nuevoTelefono) {
         String sql = "UPDATE usuarios SET telefono = ? WHERE id_usuarios = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -150,6 +150,7 @@ public class UsuarioDAO {
             return false; // Retornar false si hubo un error
         }
     }
+
     
   // Método para buscar un usuario por ID
     public Usuario buscarUsuarioPorId(int idUsuario) {

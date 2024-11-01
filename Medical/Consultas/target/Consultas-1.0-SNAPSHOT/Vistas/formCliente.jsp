@@ -230,7 +230,7 @@
     </div>
     <div>
         <p>Teléfono</p>
-        <input type="text" value="<%= usuario.getTelefono() %>" name="txttelefono" disabled />
+        <input type="text" value="<%= usuario.getTelefono() %>" name="txttelefono" id="txttelefono" disabled />
     </div>
     <div>
         <p>EPS</p>
@@ -299,47 +299,56 @@
                 mostrarSeccion('areaConsulta'); // Mostrar consulta al cargar
             };
 
+            document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('btnPerfil').addEventListener('click', function () {
-                mostrarSeccion('perfil'); // Mostrar perfil
-                document.getElementById('container_btn').style.display = 'none';
+                mostrarSeccion('perfil');
             });
 
             document.getElementById('btnConsultar').addEventListener('click', function () {
-                mostrarSeccion('areaConsulta'); // Mostrar consulta
-                document.getElementById('container_btn').style.display = 'flex';
+                mostrarSeccion('areaConsulta');
             });
 
-             document.getElementById('btnCerrarSesion').addEventListener('click', function () {
-        window.location.href = '/Consultas/cerrar-sesion'; // Asegúrate de que sea esta URL
-    });
-
-document.getElementById('btnCerrarSesion').addEventListener('click', function () {
-    window.location.href = '/Consultas/cerrar-sesion'; // Asegúrate de que sea esta URL
-});
-
-
- function guardarCambios() {
-        const telefono = document.getElementById('txttelefono').value;
-        const usuarioId = <%= usuario.getId() %>; // Obtener ID del usuario desde el servidor
-
-        fetch('/Consultas/TelefonoServlet', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: `telefono=${telefono}&id_usuarios=${usuarioId}`
-        })
-        .then(response => response.json())
-        .then(data => {
-            alert(data.message); // Mostrar mensaje de éxito o error
-            if (data.success) {
-                document.getElementById('txttelefono').disabled = true; // Deshabilitar de nuevo el input
-            }
-        })
-        .catch(error => {
-            alert('Error: ' + error.message);
+            document.getElementById('btnCerrarSesion').addEventListener('click', function () {
+                window.location.href = '/Consultas/cerrar-sesion'; // Asegúrate de que sea esta URL
+            });
         });
+
+  function guardarCambios() {
+    
+    console.log("Función guardarCambios() llamada.");
+
+    var telefonoInput = document.getElementById('txttelefono');
+    var nuevoTelefono = telefonoInput.value; // Obtener el nuevo teléfono
+     
+    console.log("Nuevo teléfono:", nuevoTelefono);
+
+    var usuarioId = "<%= usuario.getId() %>"; // Obtener el ID del usuario logueado
+    
+    console.log("ID de usuario:", usuarioId);
+
+    if (!nuevoTelefono) {
+        alert("Por favor, ingresa un número de teléfono.");
+        return;
     }
+
+    // Aquí puedes agregar el código AJAX para enviar los datos
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/Consultas/TelefonoServlet", true); // URL del servlet
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            alert(xhr.responseText); // Mostrar la respuesta del servlet
+            // Opcional: deshabilitar el campo nuevamente
+            telefonoInput.disabled = true;
+        } else {
+            alert("Error al actualizar el teléfono.");
+        }
+    };
+
+    // Enviar la solicitud con el nuevo teléfono y el ID del usuario
+    xhr.send("nuevoTelefono=" + encodeURIComponent(nuevoTelefono) + "&idUsuario=" + encodeURIComponent(usuarioId));
+}
 
             /*
              document.getElementById('btnPerfil').addEventListener('click', function () {

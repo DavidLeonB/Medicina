@@ -48,7 +48,7 @@ public class Cliente {
 
     public static void main(String[] args) {
         Cliente cliente = new Cliente("2"); // Usa el ID correspondiente
-        String nuevoTelefono = "987654321";
+        String nuevoTelefono = "9876";
         
         cliente.actualizarTelefono(nuevoTelefono);
         
