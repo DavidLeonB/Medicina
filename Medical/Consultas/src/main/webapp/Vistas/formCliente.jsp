@@ -21,7 +21,7 @@
 
     // Verificar que usuarioDAO no sea null
     if (usuarioDAO != null && usuario != null) {
-        dosificaciones = usuarioDAO.obtenerMedicamentosYDosificaciones(usuario.getId()); // Asumiendo que tienes un método getId() en Usuario
+        dosificaciones = usuarioDAO.obtenerMedicamentosYDosificaciones(usuario.getId());
     } else {
         out.println("<p>Error: No se pudo obtener el DAO del usuario.</p>");
     }
@@ -71,6 +71,15 @@
                 background-color: rgba(176,196,222,0.5);
             }
 
+          
+
+.medicamento {
+    display: flex;
+    border-radius: 5px;
+    box-sizing: border-box; /* Para incluir padding y border en el ancho total */
+}
+
+            
             .areaConsulta {
                 display: flex;
                 flex-direction: column;
@@ -113,6 +122,7 @@
 
             .consmedica {
                 display: flex;
+                flex-direction: row;
                 align-content: center;
                 flex-direction: column;
                 align-items: center;
@@ -177,7 +187,8 @@
 
             .med {
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
+                width: 100%;
                 align-items: center;
                 margin-bottom: 20px;
                 margin: 5px;
@@ -185,7 +196,11 @@
                 padding: 15px;
                 border-radius: 20px;
                 background-color: transparent;
+                
+    gap: 20px; 
             }
+            
+            
             .med p{
                 margin: 8px;
             }
@@ -276,30 +291,39 @@
         <div class="areaConsulta" id="areaConsulta" style="display: none;">
             
             <div class="consmedica">                
-                  
+                 
+                <div class="sede">
+                    
+                    
+                </div>
 
+   <div class="med">
+     <%
+    // Definición de colores para el fondo y el borde
+    
+    String[] coloresBorde = {"#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#8E44AD"};
 
-       <div class="med">
-  
-
-    <%
-        if (dosificaciones != null && !dosificaciones.isEmpty()) {
+    // Verificar que la lista de dosificaciones no sea nula ni esté vacía
+    if (dosificaciones != null && !dosificaciones.isEmpty()) {
         out.println("<script>alert('Total de medicamentos: " + dosificaciones.size() + "');</script>");
-            for (MedicamentoDosificacion dos : dosificaciones) {
-    %>
-                <p><strong>Medicamento:</strong></p>
-                <input type="text" value="<%= dos.getMedicamento() %>" name="med" readonly />
-                <p>Cantidad:</p>
-                <input type="text" value="<%= dos.getDosificacion() %>" name="cant" readonly />
-                <p>Estado:</p>
-                <input type="text" value="" name="estado" />
+        for (MedicamentoDosificacion dos : dosificaciones) {
+            // Seleccionar un color aleatorio para el fondo y el borde
+            
+            String colorBorde = coloresBorde[(int) (Math.random() * coloresBorde.length)];
+%>
+                <div class="medicamento" style=" border: 2px solid <%= colorBorde %>;">
+                    <p><strong>Medicamento:</strong></p>
+                    <input type="text" value="<%= dos.getMedicamento() %>" name="med" disabled />
+                    <p><strong>Cantidad:</strong></p>
+                    <input type="text" value="<%= dos.getDosificacion() %>" name="cant" disabled />
+                    <p><strong>Estado:</strong></p>
+                    <input type="text" value="" name="estado" disabled/>
+                </div>
     <%
             }
         } else {
-    %>
-    <script>alert('Error: La lista de dosificaciones es nula.');</script>
-            <p>No hay medicamentos disponibles para mostrar.</p>
-    <%
+            out.println("<script>alert('Error: La lista de dosificaciones es nula.');</script>");
+            out.println("<p>No se registra medicación para el usuario.</p>");
         }
     %>
 </div>
@@ -396,6 +420,16 @@
     // Enviar la solicitud con el nuevo teléfono y el ID del usuario
     xhr.send("nuevoTelefono=" + encodeURIComponent(nuevoTelefono) + "&idUsuario=" + encodeURIComponent(usuarioId));
 }
+
+
+// Función para asignar un color aleatorio
+    function obtenerColorAleatorio() {
+        return colores[Math.floor(Math.random() * colores.length)];
+    }
+    
+    
+    // Array de colores
+    const colores = ['#ff5733', '#f1c40f', '#c0392b', ' #28b463', '#2471a3 '];
 
             /*
              document.getElementById('btnPerfil').addEventListener('click', function () {

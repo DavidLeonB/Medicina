@@ -24,9 +24,9 @@ public class MedicamentosServlet extends HttpServlet {
             // Crear instancia de UsuarioDAO con la conexión
             UsuarioDAO usuarioDao = new UsuarioDAO(conn);
             List<MedicamentoDosificacion> dosificaciones = usuarioDao.obtenerMedicamentosYDosificaciones(userId);
+request.setAttribute("dosificaciones", dosificaciones);
+request.getRequestDispatcher("tuVista.jsp").forward(request, response);
 
-            // Agregar la lista de dosificaciones al request
-            request.setAttribute("dosificaciones", dosificaciones);
         } catch (SQLException e) {
             e.printStackTrace(); // Manejar excepciones adecuadamente
         }

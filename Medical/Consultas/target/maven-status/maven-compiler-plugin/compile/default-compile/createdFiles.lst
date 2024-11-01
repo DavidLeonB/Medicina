@@ -1,9 +1,9 @@
 Modelo\UsuarioServlet.class
-Modelo\DatabaseConnection.class
 Modelo\Usuario.class
+Modelo\CerrarSesionServlet.class
+Modelo\DatabaseConnection.class
 Modelo\Medicamento.class
 Modelo\UsuarioDAO.class
 Modelo\ActualizarTelefonoServlet.class
-Modelo\CerrarSesionServlet.class
 Modelo\TestUserConnection.class
 Modelo\TelefonoServlet.class
