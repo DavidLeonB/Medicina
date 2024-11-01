@@ -9,10 +9,26 @@
 <%@page import="javax.servlet.http.HttpSession"%>
 <%@ page import="Modelo.Usuario" %>
 <%@ page import="Modelo.UsuarioDAO" %>
-<% 
+<%@ page import="Modelo.MedicamentoDosificacion" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+    // Obtener el objeto UsuarioDAO de la sesión
     UsuarioDAO usuarioDAO = (UsuarioDAO) session.getAttribute("usuarioDAO");
     Usuario usuario = (Usuario) session.getAttribute("usuario");
+
+    List<MedicamentoDosificacion> dosificaciones = null;
+
+    // Verificar que usuarioDAO no sea null
+    if (usuarioDAO != null && usuario != null) {
+        dosificaciones = usuarioDAO.obtenerMedicamentosYDosificaciones(usuario.getId()); // Asumiendo que tienes un método getId() en Usuario
+    } else {
+        out.println("<p>Error: No se pudo obtener el DAO del usuario.</p>");
+    }
 %>
+
+
+
 
 <!DOCTYPE html>
 <html>
@@ -31,7 +47,10 @@
 
             .saludo {
                 margin-bottom: 15px;
+                           
             }
+            
+            
 
             .btnSaludo{
                 background-color: rgba(128, 128, 128 0.6);
@@ -209,9 +228,12 @@
 
 
         <div class="saludo">
-            <h1>Bienvenido, <%= usuario.getNombre()%>!</h1>  
-            <h4>Estamos felices de que estés con nosotros, aquí puedes Consultar, Generar, Separar tus medicamentos.</h4>
+            
+                <h1>Bienvenido, <%= usuario.getNombre()%>!</h1>  
+            <h3>Estamos felices de que estés con nosotros, aquí puedes Consultar, Generar, Separar tus medicamentos.</h3>
 
+            
+            
             <div class="btnSaludo">
                 <input class="perfil" type="button" id="btnPerfil" value="Perfil">
                 <input class="areaConsulta" type="button" id="btnConsultar" value="Consultar">
@@ -252,18 +274,39 @@
         </div>
 
         <div class="areaConsulta" id="areaConsulta" style="display: none;">
-            <div class="consmedica">
-                <div class="sede"> 
-                    <p><strong>sede </strong></p>
-                    <div class="med">
-                        <p><strong> Medicamento</strong></p>
-                        <input type="text" value="" name="med" />
-                        <p>Cantidad</p>
-                        <input type="text" value="" name="cant" />
-                        <p>Estado</p>
-                        <input type="text" value="" name="estado" />
-                    </div>
-                </div>
+            
+            <div class="consmedica">                
+                  
+
+
+       <div class="med">
+  
+
+    <%
+        if (dosificaciones != null && !dosificaciones.isEmpty()) {
+        out.println("<script>alert('Total de medicamentos: " + dosificaciones.size() + "');</script>");
+            for (MedicamentoDosificacion dos : dosificaciones) {
+    %>
+                <p><strong>Medicamento:</strong></p>
+                <input type="text" value="<%= dos.getMedicamento() %>" name="med" readonly />
+                <p>Cantidad:</p>
+                <input type="text" value="<%= dos.getDosificacion() %>" name="cant" readonly />
+                <p>Estado:</p>
+                <input type="text" value="" name="estado" />
+    <%
+            }
+        } else {
+    %>
+    <script>alert('Error: La lista de dosificaciones es nula.');</script>
+            <p>No hay medicamentos disponibles para mostrar.</p>
+    <%
+        }
+    %>
+</div>
+
+
+
+               
             </div>
         </div>
 
@@ -302,11 +345,15 @@
             document.addEventListener('DOMContentLoaded', function () {
             document.getElementById('btnPerfil').addEventListener('click', function () {
                 mostrarSeccion('perfil');
+                document.getElementById('container_btn').style.display = 'none';
             });
 
             document.getElementById('btnConsultar').addEventListener('click', function () {
                 mostrarSeccion('areaConsulta');
             });
+
+
+
 
             document.getElementById('btnCerrarSesion').addEventListener('click', function () {
                 window.location.href = '/Consultas/cerrar-sesion'; // Asegúrate de que sea esta URL

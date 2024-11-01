@@ -1,9 +1,12 @@
 package Modelo;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UsuarioDAO {
     private Connection connection; // Conexión a la base de datos
@@ -174,5 +177,27 @@ public class UsuarioDAO {
         }
         return null; // Retornar null si no se encontró el usuario
     }
-}
+    
+    public List<MedicamentoDosificacion> obtenerMedicamentosYDosificaciones(int userId) {
+        List<MedicamentoDosificacion> listaDosificaciones = new ArrayList<>();
+        String query = "SELECT medicamentos.nombre AS Medicamento, usu_medicamentos.dosificacion AS Dosificacion " +
+                       "FROM usu_medicamentos " +
+                       "JOIN medicamentos ON usu_medicamentos.id_medicamentos = medicamentos.id_medicamentos " +
+                       "WHERE usu_medicamentos.id_usuarios = ? " +
+                       "ORDER BY medicamentos.nombre";
 
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                String medicamento = rs.getString("Medicamento");
+                String dosificacion = rs.getString("Dosificacion");
+                listaDosificaciones.add(new MedicamentoDosificacion(medicamento, dosificacion));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(); // Manejo de excepciones
+        }
+        return listaDosificaciones;
+    }
+}
