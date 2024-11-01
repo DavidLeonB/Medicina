@@ -53,11 +53,15 @@
             
 
             .btnSaludo{
+                
+                margin: 10px;
                 background-color: rgba(128, 128, 128 0.6);
+                border:#0315af;
                 display: flex;
                 align-content: center;
                 align-items: center;
                 width: 600px;
+                justify-content: space-around
 
             }
 
@@ -185,6 +189,10 @@
                 border: solid thin #0315af;
             }
 
+            .sede{
+                width: 80%;
+            }
+            
             .med {
                 display: flex;
                 flex-direction: column;
@@ -249,12 +257,12 @@
 
             
             
-            <div class="btnSaludo">
+            
+        </div>
+<div class="btnSaludo">
                 <input class="perfil" type="button" id="btnPerfil" value="Perfil">
                 <input class="areaConsulta" type="button" id="btnConsultar" value="Consultar">
             </div>
-        </div>
-
         <div class="perfil" id="perfil" style="display: none;">
             <div class="datos">
     <div>
@@ -293,11 +301,9 @@
             <div class="consmedica">                
                  
                 <div class="sede">
-                    
-                    
-                </div>
-
-   <div class="med">
+                  
+                <p><strong>Nombre de la Sede:</strong></p>    
+                    <div class="med">
      <%
     // Definición de colores para el fondo y el borde
     
@@ -327,6 +333,10 @@
         }
     %>
 </div>
+                    
+                </div>
+
+   
 
 
 
