@@ -47,13 +47,13 @@
 
             .saludo {
                 margin-bottom: 15px;
-                           
+
             }
-            
-            
+
+
 
             .btnSaludo{
-                
+
                 margin: 10px;
                 background-color: rgba(128, 128, 128 0.6);
                 border:#0315af;
@@ -75,15 +75,15 @@
                 background-color: rgba(176,196,222,0.5);
             }
 
-          
 
-.medicamento {
-    display: flex;
-    border-radius: 5px;
-    box-sizing: border-box; /* Para incluir padding y border en el ancho total */
-}
 
-            
+            .medicamento {
+                display: flex;
+                border-radius: 5px;
+                box-sizing: border-box; /* Para incluir padding y border en el ancho total */
+            }
+
+
             .areaConsulta {
                 display: flex;
                 flex-direction: column;
@@ -192,7 +192,7 @@
             .sede{
                 width: 80%;
             }
-            
+
             .med {
                 display: flex;
                 flex-direction: column;
@@ -204,11 +204,11 @@
                 padding: 15px;
                 border-radius: 20px;
                 background-color: transparent;
-                
-    gap: 20px; 
+
+                gap: 20px;
             }
-            
-            
+
+
             .med p{
                 margin: 8px;
             }
@@ -251,96 +251,139 @@
 
 
         <div class="saludo">
-            
-                <h1>Bienvenido, <%= usuario.getNombre()%>!</h1>  
+
+            <h1>Bienvenido, <%= usuario.getNombre()%>!</h1>  
             <h3>Estamos felices de que estés con nosotros, aquí puedes Consultar, Generar, Separar tus medicamentos.</h3>
 
-            
-            
-            
+
+
+
         </div>
-<div class="btnSaludo">
-                <input class="perfil" type="button" id="btnPerfil" value="Perfil">
-                <input class="areaConsulta" type="button" id="btnConsultar" value="Consultar">
-            </div>
+        <div class="btnSaludo">
+            <input class="perfil" type="button" id="btnPerfil" value="Perfil">
+            <input class="areaConsulta" type="button" id="btnConsultar" value="Consultar">
+        </div>
         <div class="perfil" id="perfil" style="display: none;">
             <div class="datos">
-    <div>
-        <p>Nombre</p>
-        <input type="text" value="<%= usuario.getNombre() %>" name="txtnombre" disabled />
-    </div>
-    <div>
-        <p>Apellido</p>
-        <input type="text" value="<%= usuario.getApellido() %>" name="txtapellido" disabled />
-    </div>
-    <div>
-        <p>Teléfono</p>
-        <input type="text" value="<%= usuario.getTelefono() %>" name="txttelefono" id="txttelefono" disabled />
-    </div>
-    <div>
-        <p>EPS</p>
-        <input type="text" value="<%= usuarioDAO.obtenerNombreEPS(usuario.getIdEPS()) %>" name="txteps" disabled />
-    </div>
-    <div>
-        <p>Dispensador de Medicina</p>
-        <input type="text" value="<%= usuarioDAO.obtenerNombreIPS(usuario.getIdIPS()) %>" name="txtips" disabled />
-    </div>
-</div>
+                <div>
+                    <p>Nombre</p>
+                    <input type="text" value="<%= usuario.getNombre()%>" name="txtnombre" disabled />
+                </div>
+                <div>
+                    <p>Apellido</p>
+                    <input type="text" value="<%= usuario.getApellido()%>" name="txtapellido" disabled />
+                </div>
+                <div>
+                    <p>Teléfono</p>
+                    <input type="text" value="<%= usuario.getTelefono()%>" name="txttelefono" id="txttelefono" disabled />
+                </div>
+                <div>
+                    <p>EPS</p>
+                    <input type="text" value="<%= usuarioDAO.obtenerNombreEPS(usuario.getIdEPS())%>" name="txteps" disabled />
+                </div>
+                <div>
+                    <p>Dispensador de Medicina</p>
+                    <input type="text" value="<%= usuarioDAO.obtenerNombreIPS(usuario.getIdIPS())%>" name="txtips" disabled />
+                </div>
+            </div>
 
             <div class="actualizaciones">
                 <div class="acciones">
                     <input class="actualizar" type="button" value="Actualizar Datos" onclick="habilitarInputs()" />
-            <input class="guardarCambios" type="button" value="Guardar Cambios" onclick="guardarCambios()" />
-            <input class="cerrarSesion" type="button" id="btnCerrarSesion" value="Cerrar Sesión" />
+                    <input class="guardarCambios" type="button" value="Guardar Cambios" onclick="guardarCambios()" />
+                    <input class="cerrarSesion" type="button" id="btnCerrarSesion" value="Cerrar Sesión" />
                 </div>
             </div>
         </div>
 
         <div class="areaConsulta" id="areaConsulta" style="display: none;">
-            
+
             <div class="consmedica">                
-                 
+
+                <%
+                    // Definición de nombres de las sedes en una lista para poder eliminar elementos
+                    List<String> nombresSedes = new ArrayList<>();
+                    nombresSedes.add("Sede San Mateo");
+                    nombresSedes.add("Sede Bosa");
+                    nombresSedes.add("Sede Kennedy");
+                    nombresSedes.add("Sede Americas");
+                    nombresSedes.add("Sede 20 de Julio");
+                    nombresSedes.add("Sede Teuaquillo");
+                    nombresSedes.add("Sede Chapinero");
+                    nombresSedes.add("Sede Portal 80");
+                    nombresSedes.add("Sede Chico");
+                    nombresSedes.add("Sede Boulevar");
+                    nombresSedes.add("Sede Usaquen");
+                    nombresSedes.add("Sede Suba I");
+                    nombresSedes.add("Sede Suba II");
+                    nombresSedes.add("Sede Toberin");
+                    nombresSedes.add("Sede Usme");
+
+                    // Definición de colores para el fondo y el borde
+                    String[] coloresBorde = {"#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#8E44AD"};
+
+                    // Bucle para repetir el proceso 2 veces, sin repetir sedes
+                    for (int i = 0; i < 2; i++) {
+                        // Selección aleatoria de una sede
+                        int index = (int) (Math.random() * nombresSedes.size());
+                        String nombreSede = nombresSedes.get(index);
+
+                        // Eliminar la sede seleccionada para que no se repita
+                        nombresSedes.remove(index);
+                %>
+
                 <div class="sede">
-                  
-                <p><strong>Nombre de la Sede:</strong></p>    
+                    <!-- Mostrar el nombre de la sede seleccionada -->
+                    <h3><strong><%= nombreSede%></strong> </h3>
+
                     <div class="med">
-     <%
-    // Definición de colores para el fondo y el borde
-    
-    String[] coloresBorde = {"#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#8E44AD"};
+                        <%
+                            // Definición de estados posibles para los medicamentos
+                            String[] estadosMed = {"Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Agotado"};
 
-    // Verificar que la lista de dosificaciones no sea nula ni esté vacía
-    if (dosificaciones != null && !dosificaciones.isEmpty()) {
-        out.println("<script>alert('Total de medicamentos: " + dosificaciones.size() + "');</script>");
-        for (MedicamentoDosificacion dos : dosificaciones) {
-            // Seleccionar un color aleatorio para el fondo y el borde
-            
-            String colorBorde = coloresBorde[(int) (Math.random() * coloresBorde.length)];
-%>
-                <div class="medicamento" style=" border: 2px solid <%= colorBorde %>;">
-                    <p><strong>Medicamento:</strong></p>
-                    <input type="text" value="<%= dos.getMedicamento() %>" name="med" disabled />
-                    <p><strong>Cantidad:</strong></p>
-                    <input type="text" value="<%= dos.getDosificacion() %>" name="cant" disabled />
-                    <p><strong>Estado:</strong></p>
-                    <input type="text" value="" name="estado" disabled/>
+                            // Verificar que la lista de dosificaciones no sea nula ni esté vacía
+                            if (dosificaciones != null && !dosificaciones.isEmpty()) {
+                                out.println("<script>alert('Total de medicamentos: " + dosificaciones.size() + "');</script>");
+
+                                // Mostrar medicamentos
+                                for (MedicamentoDosificacion dos : dosificaciones) {
+                                    // Seleccionar un color aleatorio para el fondo y el borde
+                                    String colorBorde = coloresBorde[(int) (Math.random() * coloresBorde.length)];
+
+                                    // Determinar el estado del medicamento de manera aleatoria
+                                    String estado = estadosMed[(int) (Math.random() * estadosMed.length)];
+                        %>
+                        <div class="medicamento" style="border: 2px solid <%= colorBorde%>;">
+                            <p><strong>Medicamento:</strong></p>
+                            <input type="text" value="<%= dos.getMedicamento()%>" name="med" disabled />
+                            <p><strong>Dosificación:</strong></p>
+                            <input type="text" value="<%= dos.getDosificacion()%>" name="cant" disabled />
+                            <p><strong>Estado:</strong></p>
+                            <input type="text" value="<%= estado%>" name="estado" disabled />
+                        </div>
+                        <%
+                                }
+                            } else {
+                                out.println("<script>alert('Error: La lista de dosificaciones es nula.');</script>");
+                                out.println("<p>No se registra medicación para el usuario.</p>");
+                            }
+                        %>
+                    </div>
                 </div>
-    <%
-            }
-        } else {
-            out.println("<script>alert('Error: La lista de dosificaciones es nula.');</script>");
-            out.println("<p>No se registra medicación para el usuario.</p>");
-        }
-    %>
-</div>
-                    
-                </div>
 
-   
+                <%
+                    }
+                %>
 
 
 
-               
+
+
+
+
+
+
+
             </div>
         </div>
 
@@ -373,73 +416,73 @@
 
             // Al cargar la página, mostrar la sección de consulta por defecto
             window.onload = function () {
-                mostrarSeccion('areaConsulta'); // Mostrar consulta al cargar
+                mostrarSeccion('perfil'); // Mostrar consulta al cargar
             };
 
             document.addEventListener('DOMContentLoaded', function () {
-            document.getElementById('btnPerfil').addEventListener('click', function () {
-                mostrarSeccion('perfil');
-                document.getElementById('container_btn').style.display = 'none';
+                document.getElementById('btnPerfil').addEventListener('click', function () {
+                    mostrarSeccion('perfil');
+                    document.getElementById('container_btn').style.display = 'none';
+                });
+
+                document.getElementById('btnConsultar').addEventListener('click', function () {
+                    mostrarSeccion('areaConsulta');
+                });
+
+
+
+
+                document.getElementById('btnCerrarSesion').addEventListener('click', function () {
+                    window.location.href = '/Consultas/cerrar-sesion'; // Asegúrate de que sea esta URL
+                });
             });
 
-            document.getElementById('btnConsultar').addEventListener('click', function () {
-                mostrarSeccion('areaConsulta');
-            });
+            function guardarCambios() {
 
+                console.log("Función guardarCambios() llamada.");
 
+                var telefonoInput = document.getElementById('txttelefono');
+                var nuevoTelefono = telefonoInput.value; // Obtener el nuevo teléfono
 
+                console.log("Nuevo teléfono:", nuevoTelefono);
 
-            document.getElementById('btnCerrarSesion').addEventListener('click', function () {
-                window.location.href = '/Consultas/cerrar-sesion'; // Asegúrate de que sea esta URL
-            });
-        });
+                var usuarioId = "<%= usuario.getId()%>"; // Obtener el ID del usuario logueado
 
-  function guardarCambios() {
-    
-    console.log("Función guardarCambios() llamada.");
+                console.log("ID de usuario:", usuarioId);
 
-    var telefonoInput = document.getElementById('txttelefono');
-    var nuevoTelefono = telefonoInput.value; // Obtener el nuevo teléfono
-     
-    console.log("Nuevo teléfono:", nuevoTelefono);
+                if (!nuevoTelefono) {
+                    alert("Por favor, ingresa un número de teléfono.");
+                    return;
+                }
 
-    var usuarioId = "<%= usuario.getId() %>"; // Obtener el ID del usuario logueado
-    
-    console.log("ID de usuario:", usuarioId);
+                // Aquí puedes agregar el código AJAX para enviar los datos
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/Consultas/TelefonoServlet", true); // URL del servlet
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-    if (!nuevoTelefono) {
-        alert("Por favor, ingresa un número de teléfono.");
-        return;
-    }
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        alert(xhr.responseText); // Mostrar la respuesta del servlet
+                        // Opcional: deshabilitar el campo nuevamente
+                        telefonoInput.disabled = true;
+                    } else {
+                        alert("Error al actualizar el teléfono.");
+                    }
+                };
 
-    // Aquí puedes agregar el código AJAX para enviar los datos
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", "/Consultas/TelefonoServlet", true); // URL del servlet
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-    xhr.onload = function() {
-        if (xhr.status === 200) {
-            alert(xhr.responseText); // Mostrar la respuesta del servlet
-            // Opcional: deshabilitar el campo nuevamente
-            telefonoInput.disabled = true;
-        } else {
-            alert("Error al actualizar el teléfono.");
-        }
-    };
-
-    // Enviar la solicitud con el nuevo teléfono y el ID del usuario
-    xhr.send("nuevoTelefono=" + encodeURIComponent(nuevoTelefono) + "&idUsuario=" + encodeURIComponent(usuarioId));
-}
+                // Enviar la solicitud con el nuevo teléfono y el ID del usuario
+                xhr.send("nuevoTelefono=" + encodeURIComponent(nuevoTelefono) + "&idUsuario=" + encodeURIComponent(usuarioId));
+            }
 
 
 // Función para asignar un color aleatorio
-    function obtenerColorAleatorio() {
-        return colores[Math.floor(Math.random() * colores.length)];
-    }
-    
-    
-    // Array de colores
-    const colores = ['#ff5733', '#f1c40f', '#c0392b', ' #28b463', '#2471a3 '];
+            function obtenerColorAleatorio() {
+                return colores[Math.floor(Math.random() * colores.length)];
+            }
+
+
+            // Array de colores
+            const colores = ['#ff5733', '#f1c40f', '#c0392b', ' #28b463', '#2471a3 '];
 
             /*
              document.getElementById('btnPerfil').addEventListener('click', function () {
@@ -447,13 +490,13 @@
              document.getElementById('areaConsulta').style.display = 'none';
              document.getElementById('container_btn').style.display = 'none';
              });
-     
+             
              document.getElementById('btnConsultar').addEventListener('click', function () {
              document.getElementById('perfil').style.display = 'none';
              document.getElementById('areaConsulta').style.display = 'flex';
              document.getElementById('container_btn').style.display = 'flex';
              });
-     
+             
              document.getElementById('btnCerrarSesion').addEventListener('click', function () {
              window.location.href = '/Medicamentos/cerrar-sesion'; // Asegúrate de que sea esta URL
              });*/
