@@ -158,7 +158,20 @@
                 justify-content: space-around;
 
             }
-
+            
+            
+             
+            
+            .logopse{
+                width: 40px;
+                height: 40px;
+            }
+            
+            .efectivo i{
+                font-size: 40px;
+                color: green
+            }
+            
             .datos input,
             .container_perfil input {
                 width: 95%;
@@ -225,7 +238,36 @@
                 text-align: center;
                 border: 2px solid #0315af;
             }
-
+            .pagos{
+                display: flex;
+                align-items: center;
+                justify-items: center;
+                padding: 10px;
+                margin: 10px;
+                border: red solid 2px;
+            }
+            
+            .pse{
+                display: flex;
+                justify-content: center;
+                align-items:  center;
+                border: blue solid 2px;
+                margin:15px;
+                
+            }
+            .efectivo{
+                display: flex;
+                justify-content: center;
+                align-items:  center;
+                border: blue solid 2px;
+                margin: 15px;
+            }
+            
+            
+            .pse input, .efectivo input{
+                width: 60%;
+            }
+            
             .container_btn input,
             .saludo input,
             .actualizaciones input {
@@ -233,13 +275,16 @@
                 border: #0315af solid 2px;
             }
 
+            .pse input:hover,
+            .efectivo input:hover,
+            .consultas input:hover,
             .container_btn input:hover,
             .actualizaciones input:hover,
-            .saludo input:hover {
+            .btnSaludo input:hover {
                 background-color: aqua;
                 border: var(--azul_oscuro);
                 color: #0315af;
-                font-size: 1.3rem;
+                font-size: 1.1rem;
                 box-shadow: 10px 10px 10px rgba(83, 87, 100, 0.4);
             }
 
@@ -250,7 +295,7 @@
     <body>
 
 
-        <div class="saludo">
+        <div class="saludo" id="saludo">
 
             <h1>Bienvenido, <%= usuario.getNombre()%>!</h1>  
             <h3>Estamos felices de que estés con nosotros, aquí puedes Consultar, Generar, Separar tus medicamentos.</h3>
@@ -261,7 +306,7 @@
         </div>
         <div class="btnSaludo">
             <input class="perfil" type="button" id="btnPerfil" value="Perfil">
-            <input class="areaConsulta" type="button" id="btnConsultar" value="Consultar">
+            <input class="areaConsulta" type="button" id="btnConsultar" value="Consultar Medicina">
         </div>
         <div class="perfil" id="perfil" style="display: none;">
             <div class="datos">
@@ -339,7 +384,7 @@
                     <div class="med">
                         <%
                             // Definición de estados posibles para los medicamentos
-                            String[] estadosMed = {"Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Agotado"};
+                            String[] estadosMed = {"Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Agotado"};
 
                             // Verificar que la lista de dosificaciones no sea nula ni esté vacía
                             if (dosificaciones != null && !dosificaciones.isEmpty()) {
@@ -360,21 +405,43 @@
                             <input type="text" value="<%= dos.getDosificacion()%>" name="cant" disabled />
                             <p><strong>Estado:</strong></p>
                             <input type="text" value="<%= estado%>" name="estado" disabled />
+                            
                         </div>
+                        
+
                         <%
                                 }
                             } else {
                                 out.println("<script>alert('Error: La lista de dosificaciones es nula.');</script>");
                                 out.println("<p>No se registra medicación para el usuario.</p>");
                             }
+
                         %>
+                        <div class="pagos" id="pagos<%= i %>" style="display: none;">
+                            <div class="pse">
+                                
+                                <p>En esta opción el usuario tiene 48 horas para reclamar su medicamento. En caso de no hacerlo se hara la devolución del dinero.</p>
+                                <img class="logopse" src="../img/pse.svg" alt=""/>
+                                <input class="digital" type="submit" value="PSE"/>
+                            </div>
+                            <div class="efectivo">
+                                
+                                <p>Esta opción es solo informativa, ya que el usuario debe acercarse a la sede lo antes posible para que el estado de la medicina no cambie.</p>
+                            <i class='bx bx-money-withdraw'></i>
+                                <input class="cash" type="submit" value="Efectivo"/>
+                            </div>
+                        </div>
+                        <div class="consultas">
+                            <input class="separar" type="submit" value="Separar Medicamentos" onclick="activarPagos('<%= i %>')" />
+                            <input class="generar" type="submit" value="Generar Reporte" />
+                        </div>
+                        
                     </div>
+
                 </div>
 
-                <%
-                    }
+                <%                    }
                 %>
-
 
 
 
@@ -423,13 +490,18 @@
                 document.getElementById('btnPerfil').addEventListener('click', function () {
                     mostrarSeccion('perfil');
                     document.getElementById('container_btn').style.display = 'none';
+                    document.getElementById('saludo').style.display = 'block';
                 });
 
                 document.getElementById('btnConsultar').addEventListener('click', function () {
                     mostrarSeccion('areaConsulta');
                 });
 
-
+document.getElementById("btnConsultar").addEventListener("click", function() {
+  // Ocultar las áreas de saludo y pagos
+  document.getElementById("saludo").style.display = "none";
+ 
+});
 
 
                 document.getElementById('btnCerrarSesion').addEventListener('click', function () {
@@ -483,6 +555,13 @@
 
             // Array de colores
             const colores = ['#ff5733', '#f1c40f', '#c0392b', ' #28b463', '#2471a3 '];
+            
+            
+           //Funcion para activar seccion pagos.
+             function activarPagos(id) {
+        var pagosDiv = document.getElementById('pagos' + id);
+        pagosDiv.style.display = 'block';
+    } 
 
             /*
              document.getElementById('btnPerfil').addEventListener('click', function () {
@@ -500,7 +579,9 @@
              document.getElementById('btnCerrarSesion').addEventListener('click', function () {
              window.location.href = '/Medicamentos/cerrar-sesion'; // Asegúrate de que sea esta URL
              });*/
-        </script>
 
+
+        </script>
+        
     </body>
 </html>

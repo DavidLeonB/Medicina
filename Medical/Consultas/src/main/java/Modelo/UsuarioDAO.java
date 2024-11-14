@@ -26,10 +26,10 @@ public class UsuarioDAO {
             stmt.setInt(4, usuario.getIdEPS());
             stmt.setInt(5, usuario.getIdIPS());
             stmt.setString(6, usuario.getContrasena());
-            return stmt.executeUpdate() > 0; // Retorna true si se insertó al menos una fila
+            return stmt.executeUpdate() > 0; // Retorna true si se insertó correctamente
         } catch (SQLException e) {
             e.printStackTrace();
-            return false; // Retornar false si hubo error
+            return false; // Retorna false si hubo un error
         }
     }
 
@@ -200,4 +200,47 @@ public class UsuarioDAO {
         }
         return listaDosificaciones;
     }
+    
+     // Método para obtener todas las EPS
+  public List<EPS> obtenerTodasLasEPS() {
+    List<EPS> epsList = new ArrayList<>(); // Creamos una lista vacía para almacenar las EPS
+    String sql = "SELECT id_eps, nombre FROM eps"; // Consulta SQL para obtener todas las EPS
+
+    try (PreparedStatement stmt = connection.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) { // Ejecutamos la consulta y obtenemos los resultados
+
+        while (rs.next()) {
+            int idEps = rs.getInt("id_eps"); // Obtenemos el ID de la EPS
+            String nombreEps = rs.getString("nombre"); // Obtenemos el nombre de la EPS
+            epsList.add(new EPS(idEps, nombreEps)); // Creamos un objeto EPS y lo agregamos a la lista
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); // Si ocurre un error, lo imprimimos en la consola
+    }
+
+    return epsList; // Retornamos la lista de EPS
+}
+
+  //Método para obtener las IPS asociadas a una EPS:
+  public List<IPS> obtenerIpsPorEps(int idEps) {
+    List<IPS> ipsList = new ArrayList<>(); // Lista vacía para almacenar las IPS
+    String sql = "SELECT id_ips, nombre FROM ips WHERE id_eps = ?"; // Consulta SQL para obtener las IPS por id_eps
+
+    try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        stmt.setInt(1, idEps); // Establecemos el valor de id_eps en la consulta
+        ResultSet rs = stmt.executeQuery(); // Ejecutamos la consulta
+
+        while (rs.next()) {
+            int idIps = rs.getInt("id_ips"); // Obtenemos el ID de la IPS
+            String nombreIps = rs.getString("nombre"); // Obtenemos el nombre de la IPS
+            ipsList.add(new IPS(idIps, nombreIps)); // Creamos un objeto IPS y lo agregamos a la lista
+        }
+    } catch (SQLException e) {
+        e.printStackTrace(); // Si ocurre un error, lo imprimimos en la consola
+    }
+
+    return ipsList; // Retornamos la lista de IPS
+}
+
+  
 }

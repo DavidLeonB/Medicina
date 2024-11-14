@@ -19,9 +19,9 @@ public class TelefonoServlet extends HttpServlet {
         String nuevoTelefono = request.getParameter("nuevoTelefono");
         String idUsuario = request.getParameter("idUsuario");
 
-        String url = "jdbc:mysql://localhost:3306/medical"; // Cambia esto
-        String usuario = "root"; // Cambia esto
-        String contraseña = ""; // Cambia esto
+        String url = "jdbc:mysql://localhost:3306/medical"; 
+        String usuario = "root"; 
+        String contraseña = ""; 
 
         String sql = "UPDATE usuarios SET telefono = ? WHERE id_usuarios = ?";
 
