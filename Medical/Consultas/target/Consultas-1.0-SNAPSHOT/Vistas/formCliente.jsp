@@ -213,7 +213,7 @@
                 align-items: center;
                 margin-bottom: 20px;
                 margin: 5px;
-                border: 3px solid greenyellow;
+                border: 1.2px solid white;
                 padding: 15px;
                 border-radius: 20px;
                 background-color: transparent;
@@ -365,7 +365,8 @@
                     nombresSedes.add("Sede Usme");
 
                     // Definición de colores para el fondo y el borde
-                    String[] coloresBorde = {"#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#8E44AD"};
+                    String[] coloresBorde = {"#3357FF"};
+                   // String[] coloresBorde = {"#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#8E44AD"};
 
                     // Bucle para repetir el proceso 2 veces, sin repetir sedes
                     for (int i = 0; i < 2; i++) {
@@ -454,7 +455,7 @@
             </div>
         </div>
 
-        <div class="container_btn" id="container_btn" style="display: none;">
+        <div class="container_btn" id="container_btn" style="visibility:hidden;">
             <div class="consultas">
                 <input class="consultar" type="submit" value="Consultar Medicamentos" />
                 <input class="separar" type="submit" value="Separar Medicamentos" />
