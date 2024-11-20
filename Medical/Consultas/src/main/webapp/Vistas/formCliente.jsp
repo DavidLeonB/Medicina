@@ -36,6 +36,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="Styles/style.css" />
         <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+             
         <style>
 
 
@@ -297,7 +299,7 @@
 
         <div class="saludo" id="saludo">
 
-            <h1>Bienvenido, <%= usuario.getNombre()%>!</h1>  
+            <h1>Bienvenido, <%= usuario.getNombre()%> <%= usuario.getApellido()%></h1>  
             <h3>Estamos felices de que estés con nosotros, aquí puedes Consultar, Generar, Separar tus medicamentos.</h3>
 
 
@@ -312,7 +314,7 @@
             <div class="datos">
                 <div>
                     <p>Nombre</p>
-                    <input type="text" value="<%= usuario.getNombre()%>" name="txtnombre" disabled />
+                    <input type="text" value="<%= usuario.getNombre()%> " name="txtnombre" disabled />
                 </div>
                 <div>
                     <p>Apellido</p>
@@ -418,25 +420,36 @@
                             }
 
                         %>
+                 
                         <div class="pagos" id="pagos<%= i %>" style="display: none;">
                             <div class="pse">
                                 
                                 <p>En esta opción el usuario tiene 48 horas para reclamar su medicamento. En caso de no hacerlo se hara la devolución del dinero.</p>
                                 <img class="logopse" src="../img/pse.svg" alt=""/>
-                                <input class="digital" type="submit" value="PSE"/>
+                                <input class="digital" type="button" value="PSE" onclick="seleccionarPago('PSE')" />
                             </div>
                             <div class="efectivo">
                                 
                                 <p>Esta opción es solo informativa, ya que el usuario debe acercarse a la sede lo antes posible para que el estado de la medicina no cambie.</p>
                             <i class='bx bx-money-withdraw'></i>
-                                <input class="cash" type="submit" value="Efectivo"/>
+                                <input class="cash" type="button" value="Efectivo" onclick="seleccionarPago('Efectivo')" />
                             </div>
                         </div>
                         <div class="consultas">
-                            <input class="separar" type="submit" value="Separar Medicamentos" onclick="activarPagos('<%= i %>')" />
-                            <input class="generar" type="submit" value="Generar Reporte" />
+                            <input class="separar" type="button" value="Separar Medicamentos" onclick="activarPagos('<%= i %>')" />
+                            <input class="generar" type="button" value="Generar Reporte" onclick="generarReporte()" />
                         </div>
-                        
+                         <!-- Formulario oculto para enviar datos del tipo de pago -->
+        <form id="formGenerarReporte" action="/Consultas/GenerarReporteServlet
+" method="post" style="display:none;">
+            <input type="hidden" name="nombreUsuario" value="<%= usuario.getNombre()%>">
+<input type="hidden" name="apellidoUsuario" value="<%= usuario.getApellido()%>">
+<input type="hidden" name="Eps" value="<%= usuarioDAO.obtenerNombreEPS(usuario.getIdEPS())%>">
+<input type="hidden" name="Dispensador" value="<%= usuarioDAO.obtenerNombreIPS(usuario.getIdIPS())%>">
+            <input type="hidden" name="tipoPago" id="tipoPago" value="">
+            
+            <button type="submit" id="btnGenerar" style="display: none;">Generar Reporte PDF</button>
+        </form>
                     </div>
 
                 </div>
@@ -558,11 +571,45 @@ document.getElementById("btnConsultar").addEventListener("click", function() {
             const colores = ['#ff5733', '#f1c40f', '#c0392b', ' #28b463', '#2471a3 '];
             
             
-           //Funcion para activar seccion pagos.
+           /*Funcion para activar seccion pagos.
              function activarPagos(id) {
         var pagosDiv = document.getElementById('pagos' + id);
-        pagosDiv.style.display = 'block';
-    } 
+        pagosDiv.style.display = 'block';*/
+
+  // Función para activar la sección de pagos
+function activarPagos(id) {
+    var pagosDiv = document.getElementById('pagos' + id);
+    // Mostrar la sección de pagos si está oculta
+    if (pagosDiv.style.display === 'none' || pagosDiv.style.display === '') {
+        pagosDiv.style.display = 'block'; // Mostrar la sección de pagos
+    } else {
+        pagosDiv.style.display = 'none'; // Ocultar si ya está visible
+    }
+}
+
+
+ // Función para seleccionar el tipo de pago
+    function seleccionarPago(tipo) {
+        document.getElementById("tipoPago").value = tipo;
+       // alert("Tipo de pago seleccionado: " + tipo);
+    }
+    
+    
+   
+
+    // Función para generar el reporte PDF
+    function generarReporte() {
+        const tipoPago = document.getElementById("tipoPago").value;
+
+        if (tipoPago === "") {
+            alert("Por favor, seleccione una forma de pago antes de generar el reporte.");
+            return;
+        }
+
+        document.getElementById("formGenerarReporte").submit();
+    }
+    
+
 
             /*
              document.getElementById('btnPerfil').addEventListener('click', function () {

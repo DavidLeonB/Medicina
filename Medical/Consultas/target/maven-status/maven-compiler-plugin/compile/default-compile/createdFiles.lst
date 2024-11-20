@@ -1,5 +1,6 @@
 Modelo\UsuarioServlet.class
 Modelo\IPS.class
+Modelo\GenerarReporteServlet.class
 Modelo\Usuario.class
 Modelo\RegistrarUsuarioServlet.class
 Modelo\MedicamentosServlet.class

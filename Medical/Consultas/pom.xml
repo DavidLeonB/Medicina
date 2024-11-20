@@ -14,9 +14,33 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     
+    <repositories>
+    <repository>
+        <id>central</id>
+        <url>https://repo.maven.apache.org/maven2</url>
+    </repository>
+</repositories>
+    
+    
     <dependencies>
+        <dependency>
+        <groupId>com.google.zxing</groupId>
+        <artifactId>javase</artifactId>
+        <version>3.3.0</version>
+    </dependency>
         
-
+        <dependency>
+    <groupId>com.google.zxing</groupId>
+    <artifactId>core</artifactId>
+    <version>3.3.0</version>
+</dependency>
+    <!-- Dependencia para Apache PDFBox -->
+    <dependency>
+        <groupId>org.apache.pdfbox</groupId>
+        <artifactId>pdfbox</artifactId>
+        <version>2.0.27</version>
+    </dependency>
+        
         <dependency>
     <groupId>org.json</groupId>
     <artifactId>json</artifactId>
@@ -57,6 +81,9 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+    
+    
+   
 
     <build>
         <plugins>
