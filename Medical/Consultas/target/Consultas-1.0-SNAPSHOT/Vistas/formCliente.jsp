@@ -448,6 +448,9 @@
 <input type="hidden" name="Dispensador" value="<%= usuarioDAO.obtenerNombreIPS(usuario.getIdIPS())%>">
             <input type="hidden" name="tipoPago" id="tipoPago" value="">
             
+              
+            
+            
             <button type="submit" id="btnGenerar" style="display: none;">Generar Reporte PDF</button>
         </form>
                     </div>
