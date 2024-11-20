@@ -76,7 +76,7 @@ public class GenerarReporteServlet extends HttpServlet {
         contentStream.setFont(PDType1Font.COURIER, 12);
         
         // Obtener la fecha actual
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         String fechaSistema = sdf.format(new Date());
 
         // Escribir el título
@@ -159,7 +159,7 @@ try {
 
     // Método para generar un código QR usando ZXing
     private static void generateQRCode(String data, File file) throws Exception {
-        int size = 200;  // Tamaño del código QR
+        int size = 150;  // Tamaño del código QR
         BitMatrix matrix = new MultiFormatWriter().encode(data, BarcodeFormat.QR_CODE, size, size);
         Path path = file.toPath();
         MatrixToImageWriter.writeToPath(matrix, "PNG", path);

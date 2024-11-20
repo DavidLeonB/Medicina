@@ -386,13 +386,21 @@
 
                     <div class="med">
                         <%
+                            
+                            int medicamentoindex = 1;
+                            
                             // Definición de estados posibles para los medicamentos
                             String[] estadosMed = {"Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Agotado"};
 
+                            
+                            
                             // Verificar que la lista de dosificaciones no sea nula ni esté vacía
                             if (dosificaciones != null && !dosificaciones.isEmpty()) {
                                 out.println("<script>alert('Total de medicamentos: " + dosificaciones.size() + "');</script>");
 
+                                // Crear un índice para los campos ocultos
+                
+                                
                                 // Mostrar medicamentos
                                 for (MedicamentoDosificacion dos : dosificaciones) {
                                     // Seleccionar un color aleatorio para el fondo y el borde
@@ -403,11 +411,11 @@
                         %>
                         <div class="medicamento" style="border: 2px solid <%= colorBorde%>;">
                             <p><strong>Medicamento:</strong></p>
-                            <input type="text" value="<%= dos.getMedicamento()%>" name="med" disabled />
+                            <input type="text" value="<%= dos.getMedicamento()%>" name="med<%= medicamentoindex %>" disabled />
                             <p><strong>Dosificación:</strong></p>
-                            <input type="text" value="<%= dos.getDosificacion()%>" name="cant" disabled />
+                            <input type="text" value="<%= dos.getDosificacion()%>" name="cant<%= medicamentoindex %>" disabled />
                             <p><strong>Estado:</strong></p>
-                            <input type="text" value="<%= estado%>" name="estado" disabled />
+                            <input type="text" value="<%= estado%>" name="estado<%= medicamentoindex %>" disabled />
                             
                         </div>
                         
@@ -448,7 +456,13 @@
 <input type="hidden" name="Dispensador" value="<%= usuarioDAO.obtenerNombreIPS(usuario.getIdIPS())%>">
             <input type="hidden" name="tipoPago" id="tipoPago" value="">
             
-              
+            
+              <!-- Campos ocultos de medicamentos, dosificación y estado -->
+        <% for (int j = 1; j <= dosificaciones.size(); j++) { %>
+            <input type="hidden" name="medicamento<%= j %>" value="<%= dosificaciones.get(j-1).getMedicamento() %>">
+            <input type="hidden" name="dosificacion<%= j %>" value="<%= dosificaciones.get(j-1).getDosificacion() %>">
+            <input type="hidden" name="estado<%= j %>" value="<%= estadosMed[(int)(Math.random() * estadosMed.length)] %>">
+        <% } %>  
             
             
             <button type="submit" id="btnGenerar" style="display: none;">Generar Reporte PDF</button>
