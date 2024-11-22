@@ -432,7 +432,7 @@
                         <div class="pagos" id="pagos<%= i %>" style="display: none;">
                             <div class="pse">
                                 
-                                <p>En esta opción el usuario tiene 48 horas para reclamar su medicamento. En caso de no hacerlo se hara la devolución del dinero.</p>
+                                <p>En esta opción el usuario tiene 72 horas para reclamar su medicamento. En caso de no hacerlo se hara la devolución del dinero.</p>
                                 <img class="logopse" src="../img/pse.svg" alt=""/>
                                 <input class="digital" type="button" value="PSE" onclick="seleccionarPago('PSE')" />
                             </div>
