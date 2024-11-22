@@ -10,23 +10,23 @@
     <head>
         <meta charset="UTF-8" /> <!-- Establece la codificación de caracteres -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Configura el viewport para dispositivos móviles -->
-        
+
         <!-- Google Font -->
         <link rel="preconnect" href="https://fonts.googleapis.com" /> <!-- Mejora la carga de fuentes -->
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> <!-- Permite cargar fuentes de Google -->
         <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" /> <!-- Incluye la fuente Montserrat -->
-        
+
         <!-- CSS -->
         <link rel="stylesheet" href="../Styles/style.css" /> <!-- Incluye el archivo de estilos CSS -->
         <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" /> <!-- Incluye íconos de Boxicons -->
-        
+
         <style>
             /* Estilos CSS adicionales para personalizar la apariencia de los formularios y otros elementos */
         </style>
-        
+
         <title>Formulario de registro e inicio de sesión</title> <!-- Título de la página -->
     </head>
-    
+
     <body>
         <!-- Formulario Registrarse -->
         <div class="container-form register hide"> <!-- Contenedor para el formulario de registro -->
@@ -41,11 +41,11 @@
                 <div class="form-information-childs"> <!-- Contenedor hijo para el formulario -->
                     <h2>Crear una Cuenta</h2> <!-- Título del formulario de registro -->
                     <p class="datos">Ingresa tus datos</p> <!-- Mensaje que indica que se ingresen datos -->
-                    
+
                     <!-- Formulario de registro -->
                     <form action="LoadIpsServlet" method="POST" class="form"> <!-- Acción del formulario hacia el servlet -->
                         <input type="hidden" name="action" value="registrar" /> <!-- Campo oculto para la acción de registrar -->
-                        
+
                         <!-- Campos de entrada para nombre, apellido, teléfono y contraseña -->
                         <i class="bx bxs-user"></i> <!-- Ícono para el nombre -->
                         <input type="text" name="txtnombre" placeholder="Nombre" required /> <!-- Campo de entrada para nombre -->
@@ -68,7 +68,7 @@
                         <select name="id_ips" id="ips" required> <!-- Selección de IPS -->
                             <option value="">Selecciona IPS</option> <!-- Opción predeterminada -->
                         </select>
-                        
+
                         <i class='bx bxs-edit'></i> <!-- Ícono para el botón de registro -->
                         <input class="registrarse" type="submit" value="Registrarse" /> <!-- Botón de registro -->
                     </form>
@@ -93,11 +93,11 @@
                         <i class="bx bxl-instagram"></i>
                     </div>
                     <p class="datos">Ingresa tus datos</p> <!-- Mensaje que indica que se ingresen datos -->
-                    
+
                     <!-- Formulario de inicio de sesión -->
                     <form action="${pageContext.request.contextPath}/UsuarioServlet" method="POST" class="form"> <!-- Acción del formulario hacia el servlet -->
                         <input type="hidden" name="accion" value="verificar" /> <!-- Campo oculto para la acción de verificar -->
-                        
+
                         <i class="bx bxs-user"></i> <!-- Ícono para el nombre -->
                         <input type="text" name="nombre" placeholder="Nombre" required /> <!-- Campo de entrada para nombre -->
                         <i class="bx bxs-lock-open-alt"></i> <!-- Ícono para la contraseña -->
@@ -118,55 +118,55 @@
                     <!-- Scripts de JavaScript -->
                     <script src="script.js"></script> <!-- Incluye un archivo JavaScript externo -->
                     <script>
-                        // Función para cargar IPS basado en la selección de EPS
-                        function loadIps(id_eps) {
-                            const ipsSelect = document.getElementById('ips'); // Obtiene el elemento select de IPS
-                            ipsSelect.innerHTML = '<option value="">Cargando...</option>'; // Mensaje de carga
+                                // Función para cargar IPS basado en la selección de EPS
+                                function loadIps(id_eps) {
+                                    const ipsSelect = document.getElementById('ips'); // Obtiene el elemento select de IPS
+                                    ipsSelect.innerHTML = '<option value="">Cargando...</option>'; // Mensaje de carga
 
-                            // Realiza una petición para obtener las IPS relacionadas con la EPS seleccionada
-                            fetch(`/loadIps?epsId=${id_eps}`)
-                                .then(response => {
-                                    if (!response.ok) {
-                                        throw new Error('Network response was not ok: ' + response.statusText); // Maneja errores de red
+                                    // Realiza una petición para obtener las IPS relacionadas con la EPS seleccionada
+                                    fetch(`/loadIps?epsId=${id_eps}`)
+                                            .then(response => {
+                                                if (!response.ok) {
+                                                    throw new Error('Network response was not ok: ' + response.statusText); // Maneja errores de red
+                                                }
+                                                return response.json(); // Convierte la respuesta a JSON
+                                            })
+                                            .then(data => {
+                                                ipsSelect.innerHTML = '<option value="">Selecciona IPS</option>'; // Limpiar y agregar opción predeterminada
+
+                                                if (data && data.length) {
+                                                    data.forEach(item => { // Recorre los datos recibidos
+                                                        const option = document.createElement('option'); // Crea una nueva opción
+                                                        option.value = item.id_ips; // Asigna el ID de IPS
+                                                        option.textContent = item.nombre; // Asigna el nombre de IPS
+                                                        ipsSelect.appendChild(option); // Agrega la opción al select
+                                                    });
+                                                } else {
+                                                    ipsSelect.innerHTML = '<option value="">No se encontraron IPS</option>'; // Opción si no hay datos
+                                                }
+                                            })
+                                            .catch(err => {
+                                                ipsSelect.innerHTML = '<option value="">Error al cargar IPS</option>'; // Mensaje de error
+                                            });
+                                }
+
+                                // Función para cerrar el mensaje de error
+                                function closeMessage() {
+                                    const errorMessage = document.getElementById('error-message'); // Obtiene el mensaje de error
+                                    if (errorMessage) {
+                                        errorMessage.style.display = 'none'; // Oculta el mensaje
+                                        window.location.href = 'inicio.jsp'; // Redirige a inicio.jsp
                                     }
-                                    return response.json(); // Convierte la respuesta a JSON
-                                })
-                                .then(data => {
-                                    ipsSelect.innerHTML = '<option value="">Selecciona IPS</option>'; // Limpiar y agregar opción predeterminada
+                                }
 
-                                    if (data && data.length) {
-                                        data.forEach(item => { // Recorre los datos recibidos
-                                            const option = document.createElement('option'); // Crea una nueva opción
-                                            option.value = item.id_ips; // Asigna el ID de IPS
-                                            option.textContent = item.nombre; // Asigna el nombre de IPS
-                                            ipsSelect.appendChild(option); // Agrega la opción al select
-                                        });
-                                    } else {
-                                        ipsSelect.innerHTML = '<option value="">No se encontraron IPS</option>'; // Opción si no hay datos
+                                // Función para enviar un saludo basado en el icono seleccionado
+                                function enviarSaludo(icon) {
+                                    if (icon === 'bot') {
+                                        alert('¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte?'); // Saludo del asistente
+                                    } else if (icon === 'whatsapp') {
+                                        alert('¡Hola! Puedes contactarnos a través de WhatsApp para más asistencia.'); // Mensaje de contacto
                                     }
-                                })
-                                .catch(err => {
-                                    ipsSelect.innerHTML = '<option value="">Error al cargar IPS</option>'; // Mensaje de error
-                                });
-                        }
-
-                        // Función para cerrar el mensaje de error
-                        function closeMessage() {
-                            const errorMessage = document.getElementById('error-message'); // Obtiene el mensaje de error
-                            if (errorMessage) {
-                                errorMessage.style.display = 'none'; // Oculta el mensaje
-                                window.location.href = 'inicio.jsp'; // Redirige a inicio.jsp
-                            }
-                        }
-
-                        // Función para enviar un saludo basado en el icono seleccionado
-                        function enviarSaludo(icon) {
-                            if (icon === 'bot') {
-                                alert('¡Hola! Soy tu asistente virtual. ¿En qué puedo ayudarte?'); // Saludo del asistente
-                            } else if (icon === 'whatsapp') {
-                                alert('¡Hola! Puedes contactarnos a través de WhatsApp para más asistencia.'); // Mensaje de contacto
-                            }
-                        }
+                                }
                     </script>
 
                     <!-- Widget de Atención -->

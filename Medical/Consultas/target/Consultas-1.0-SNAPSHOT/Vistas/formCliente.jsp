@@ -36,8 +36,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" href="Styles/style.css" />
         <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-             
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
         <style>
 
 
@@ -134,7 +134,7 @@
                 flex-direction: column;
                 align-items: center;
                 margin-bottom: 10px;
-               
+
             }
 
 
@@ -158,20 +158,20 @@
                 justify-content: space-around;
 
             }
-            
-            
-             
-            
+
+
+
+
             .logopse{
                 width: 40px;
                 height: 40px;
             }
-            
+
             .efectivo i{
                 font-size: 40px;
                 color: green
             }
-            
+
             .datos input,
             .container_perfil input {
                 width: 95%;
@@ -205,7 +205,7 @@
             .sede{
                 width: 80%;
                 padding: 5px;
-                
+
             }
 
             .med {
@@ -219,7 +219,7 @@
                 padding: 15px;
                 border-radius: 20px;
                 background-color: transparent;
-padding: 5px;
+                padding: 5px;
                 gap: 20px;
             }
 
@@ -249,38 +249,38 @@ padding: 5px;
                 margin: 20px;
                 border: red solid 1.4px;
             }
-            
-         /* Estilo para los elementos PSE y Efectivo */
-.pse {
-    display: flex !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-    border: blue solid 1.5px !important;
-    border-radius: 15px;
-    margin: 10px !important;
-    padding: 5px !important;
-}
 
-.efectivo {
-    display: flex !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-    border: blue solid 1.5px !important;
-    border-radius: 15px;
-    margin: 10px !important;
-    padding: 5px !important;
-}
+            /* Estilo para los elementos PSE y Efectivo */
+            .pse {
+                display: flex !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+                border: blue solid 1.5px !important;
+                border-radius: 15px;
+                margin: 10px !important;
+                padding: 5px !important;
+            }
 
-/* Clase para ocultar elementos */
-.ocultar {
-    display: none !important;
-}
+            .efectivo {
+                display: flex !important;
+                justify-content: flex-start !important;
+                align-items: center !important;
+                border: blue solid 1.5px !important;
+                border-radius: 15px;
+                margin: 10px !important;
+                padding: 5px !important;
+            }
 
-            
+            /* Clase para ocultar elementos */
+            .ocultar {
+                display: none !important;
+            }
+
+
             .pse input, .efectivo input{
                 width: 60%;
             }
-            
+
             .container_btn input,
             .saludo input,
             .actualizaciones input {
@@ -379,7 +379,7 @@ padding: 5px;
 
                     // Definición de colores para el fondo y el borde
                     String[] coloresBorde = {"#3357FF"};
-                   // String[] coloresBorde = {"#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#8E44AD"};
+                    // String[] coloresBorde = {"#FF5733", "#33FF57", "#3357FF", "#F1C40F", "#8E44AD"};
 
                     // Bucle para repetir el proceso 2 veces, sin repetir sedes
                     for (int i = 0; i < 2; i++) {
@@ -396,69 +396,68 @@ padding: 5px;
                     <h3><strong><%= nombreSede%></strong> </h3>
 
                     <div class="med">
-    <%   
-        int medicamentoindex = 1;
-        String[] estadosMed = {"Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Agotado"};
-        
-        if (dosificaciones != null && !dosificaciones.isEmpty()) {
-            out.println("<script>alert('Total de medicamentos: " + dosificaciones.size() + "');</script>");
-            
-            for (MedicamentoDosificacion dos : dosificaciones) {
-                String colorBorde = coloresBorde[(int) (Math.random() * coloresBorde.length)];
-                String estado = estadosMed[(int) (Math.random() * estadosMed.length)];
-    %>
-    <div class="medicamento" style="border: 2px solid <%= colorBorde %>;">
-        <p><strong>Medicamento:</strong></p>
-        <input type="text" value="<%= dos.getMedicamento() %>" name="med<%= medicamentoindex %>" disabled />
-        <p><strong>Dosificación:</strong></p>
-        <input type="text" value="<%= dos.getDosificacion() %>" name="cant<%= medicamentoindex %>" disabled />
-        <p><strong>Estado:</strong></p>
-        <input type="text" value="<%= estado %>" name="estado<%= medicamentoindex %>" disabled />
-    </div>
-    <%  
-            }
-        } else {
-            out.println("<script>alert('Error: La lista de dosificaciones es nula.');</script>");
-            out.println("<p>No se registra medicación para el usuario.</p>");
-        }
-    %>
+                        <%
+                            int medicamentoindex = 1;
+                            String[] estadosMed = {"Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Disponible", "Agotado"};
 
-    <div class="pagos" id="pagos<%= i %>" style="display: none;">
-        <div class="pse" id="psePago<%= i %>" style="display: block;">
-            <p>En esta opción el usuario tiene 72 horas para reclamar su medicamento. En caso de no hacerlo se hará la devolución del dinero.</p>
-            <img class="logopse" src="../img/pse.svg" alt=""/>
-            <input class="digital" type="button" value="PSE" onclick="seleccionarPago('PSE', <%= i %>)" />
-        </div>
-        <div class="efectivo" id="efectivoPago<%= i %>" style="display: block;">
-            <p>Esta opción es solo informativa, ya que el usuario debe acercarse a la sede lo antes posible para que el estado de la medicina no cambie.</p>
-            <i class='bx bx-money-withdraw'></i>
-            <input class="cash" type="button" value="Efectivo" onclick="seleccionarPago('Efectivo', <%= i %>)" />
-        </div>
-    </div>
+                            if (dosificaciones != null && !dosificaciones.isEmpty()) {
 
-    <!-- Sección de botones -->
-    <div class="consultas" style="text-align: center;">
-        <input class="separar" type="button" value="Separar Medicamentos" id="btnSeparar<%= i %>" onclick="activarPagos('<%= i %>')" />
-        <input class="generar" type="button" value="Generar Reporte" id="btnGenerar<%= i %>" style="display: none;" onclick="generarReporte('<%= i %>')" />
-    </div>
+                                for (MedicamentoDosificacion dos : dosificaciones) {
+                                    String colorBorde = coloresBorde[(int) (Math.random() * coloresBorde.length)];
+                                    String estado = estadosMed[(int) (Math.random() * estadosMed.length)];
+                        %>
+                        <div class="medicamento" style="border: 2px solid <%= colorBorde%>;">
+                            <p><strong>Medicamento:</strong></p>
+                            <input type="text" value="<%= dos.getMedicamento()%>" name="med<%= medicamentoindex%>" disabled />
+                            <p><strong>Dosificación:</strong></p>
+                            <input type="text" value="<%= dos.getDosificacion()%>" name="cant<%= medicamentoindex%>" disabled />
+                            <p><strong>Estado:</strong></p>
+                            <input type="text" value="<%= estado%>" name="estado<%= medicamentoindex%>" disabled />
+                        </div>
+                        <%
+                                }
+                            } else {
+                                out.println("<script>alert('Error: La lista de dosificaciones es nula.');</script>");
+                                out.println("<p>No se registra medicación para el usuario.</p>");
+                            }
+                        %>
 
-    <!-- Formulario oculto para enviar datos del tipo de pago -->
-    <form id="formGenerarReporte<%= i %>" action="/Consultas/GenerarReporteServlet" method="post" style="display:none;">
-        <input type="hidden" name="nombreUsuario" value="<%= usuario.getNombre() %>">
-        <input type="hidden" name="apellidoUsuario" value="<%= usuario.getApellido() %>">
-        <input type="hidden" name="Eps" value="<%= usuarioDAO.obtenerNombreEPS(usuario.getIdEPS()) %>">
-        <input type="hidden" name="Dispensador" value="<%= usuarioDAO.obtenerNombreIPS(usuario.getIdIPS()) %>">
-        <input type="hidden" name="tipoPago" id="tipoPago<%= i %>" value="">
-        
-        <% for (int j = 1; j <= dosificaciones.size(); j++) { %>
-            <input type="hidden" name="medicamento<%= j %>" value="<%= dosificaciones.get(j-1).getMedicamento() %>">
-            <input type="hidden" name="dosificacion<%= j %>" value="<%= dosificaciones.get(j-1).getDosificacion() %>">
-            <input type="hidden" name="estado<%= j %>" value="<%= estadosMed[(int)(Math.random() * estadosMed.length)] %>">
-        <% } %>
-        
-        <button type="submit" id="btnGenerar<%= i %>" style="display: none;">Generar Reporte PDF</button>
-    </form>
-</div>
+                        <div class="pagos" id="pagos<%= i%>" style="display: none;">
+                            <div class="pse" id="psePago<%= i%>" style="display: block;">
+                                <p>En esta opción el usuario tiene 72 horas para reclamar su medicamento. En caso de no hacerlo se hará la devolución del dinero.</p>
+                                <img class="logopse" src="../img/pse.svg" alt=""/>
+                                <input class="digital" type="button" value="PSE" onclick="seleccionarPago('PSE', <%= i%>)" />
+                            </div>
+                            <div class="efectivo" id="efectivoPago<%= i%>" style="display: block;">
+                                <p>Esta opción es solo informativa, ya que el usuario debe acercarse a la sede lo antes posible para que el estado de la medicina no cambie.</p>
+                                <i class='bx bx-money-withdraw'></i>
+                                <input class="cash" type="button" value="Efectivo" onclick="seleccionarPago('Efectivo', <%= i%>)" />
+                            </div>
+                        </div>
+
+                        <!-- Sección de botones -->
+                        <div class="consultas" style="text-align: center;">
+                            <input class="separar" type="button" value="Separar Medicamentos" id="btnSeparar<%= i%>" onclick="activarPagos('<%= i%>')" />
+                            <input class="generar" type="button" value="Generar Reporte" id="btnGenerar<%= i%>" style="display: none;" onclick="generarReporte('<%= i%>')" />
+                        </div>
+
+                        <!-- Formulario oculto para enviar datos del tipo de pago -->
+                        <form id="formGenerarReporte<%= i%>" action="/Consultas/GenerarReporteServlet" method="post" style="display:none;">
+                            <input type="hidden" name="nombreUsuario" value="<%= usuario.getNombre()%>">
+                            <input type="hidden" name="apellidoUsuario" value="<%= usuario.getApellido()%>">
+                            <input type="hidden" name="Eps" value="<%= usuarioDAO.obtenerNombreEPS(usuario.getIdEPS())%>">
+                            <input type="hidden" name="Dispensador" value="<%= usuarioDAO.obtenerNombreIPS(usuario.getIdIPS())%>">
+                            <input type="hidden" name="tipoPago" id="tipoPago<%= i%>" value="">
+
+                            <% for (int j = 1; j <= dosificaciones.size(); j++) {%>
+                            <input type="hidden" name="medicamento<%= j%>" value="<%= dosificaciones.get(j - 1).getMedicamento()%>">
+                            <input type="hidden" name="dosificacion<%= j%>" value="<%= dosificaciones.get(j - 1).getDosificacion()%>">
+                            <input type="hidden" name="estado<%= j%>" value="<%= estadosMed[(int) (Math.random() * estadosMed.length)]%>">
+                            <% }%>
+
+                            <button type="submit" id="btnGenerar<%= i%>" style="display: none;">Generar Reporte PDF</button>
+                        </form>
+                    </div>
 
 
                 </div>
@@ -520,11 +519,11 @@ padding: 5px;
                     mostrarSeccion('areaConsulta');
                 });
 
-document.getElementById("btnConsultar").addEventListener("click", function() {
-  // Ocultar las áreas de saludo y pagos
-  document.getElementById("saludo").style.display = "none";
- 
-});
+                document.getElementById("btnConsultar").addEventListener("click", function () {
+                    // Ocultar las áreas de saludo y pagos
+                    document.getElementById("saludo").style.display = "none";
+
+                });
 
 
                 document.getElementById('btnCerrarSesion').addEventListener('click', function () {
@@ -578,95 +577,99 @@ document.getElementById("btnConsultar").addEventListener("click", function() {
 
             // Array de colores
             const colores = ['#ff5733', '#f1c40f', '#c0392b', ' #28b463', '#2471a3 '];
-            
-            
-           /*Funcion para activar seccion pagos.
+
+
+            /*Funcion para activar seccion pagos.
              function activarPagos(id) {
-        var pagosDiv = document.getElementById('pagos' + id);
-        pagosDiv.style.display = 'block';*/
+             var pagosDiv = document.getElementById('pagos' + id);
+             pagosDiv.style.display = 'block';*/
 
 // Variable para verificar si las opciones de pago ya fueron activadas
-let pagosActivos = false;
+            let pagosActivos = false;
 
 // Función para activar la sección de pagos
-function activarPagos(id) {
-    var pagosDiv = document.getElementById('pagos' + id);
-    var btnGenerar = document.getElementById('btnGenerar' + id);
+            function activarPagos(id) {
+                var pagosDiv = document.getElementById('pagos' + id);
+                var btnGenerar = document.getElementById('btnGenerar' + id);
 
-    // Si las opciones de pago no han sido mostradas antes, las mostramos
-    if (pagosDiv.style.display === 'none' || pagosDiv.style.display === '') {
-        pagosDiv.style.display = 'block'; // Mostrar la sección de pagos
-        btnGenerar.style.display = 'none'; // Asegurarse de que el botón "Generar Reporte" esté oculto inicialmente
+                // Si las opciones de pago no han sido mostradas antes, las mostramos
+                if (pagosDiv.style.display === 'none' || pagosDiv.style.display === '') {
+                    pagosDiv.style.display = 'block'; // Mostrar la sección de pagos
+                    btnGenerar.style.display = 'none'; // Asegurarse de que el botón "Generar Reporte" esté oculto inicialmente
 
-        // Llamamos a la función para restaurar las opciones de pago
-        restaurarOpcionesPago(id); // Restaurar ambas opciones de pago
+                    // Llamamos a la función para restaurar las opciones de pago
+                    restaurarOpcionesPago(id); // Restaurar ambas opciones de pago
 
-    } else {
-        // Si las opciones de pago ya han sido mostradas, las ocultamos completamente
-        pagosDiv.style.display = 'none'; // Ocultar la sección de pagos
-        btnGenerar.style.display = 'none'; // Ocultar el botón "Generar Reporte"
-    }
-}
-
-   
-function seleccionarPago(tipo, id) {
-    console.log("Método de pago seleccionado: " + tipo + ", ID: " + id);
-
-    // Establecer el valor del tipo de pago
-    document.getElementById("tipoPago" + id).value = tipo;
-
-    // Mostrar el botón "Generar Reporte" cuando se seleccione un método de pago
-    document.getElementById('btnGenerar' + id).style.display = 'inline-block';
-
-    // Ocultar la opción no seleccionada completamente
-    if (tipo === 'PSE') {
-        // Ocultar el pago en efectivo
-        document.getElementById('efectivoPago' + id).classList.add('ocultar');
-        // Mostrar el pago en PSE si no está oculto
-        document.getElementById('psePago' + id).classList.remove('ocultar');
-    } else if (tipo === 'Efectivo') {
-        // Ocultar el pago PSE
-        document.getElementById('psePago' + id).classList.add('ocultar');
-        // Mostrar el pago en efectivo si no está oculto
-        document.getElementById('efectivoPago' + id).classList.remove('ocultar');
-    }
-}
+                } else {
+                    // Si las opciones de pago ya han sido mostradas, las ocultamos completamente
+                    pagosDiv.style.display = 'none'; // Ocultar la sección de pagos
+                    btnGenerar.style.display = 'none'; // Ocultar el botón "Generar Reporte"
+                }
+            }
 
 
-    
-  // Función para restaurar ambas opciones de pago para una sede específica
-function restaurarOpcionesPago(id) {
-    console.log("Restaurando opciones de pago para ID:", id);
+            function seleccionarPago(tipo, id) {
+                console.log("Método de pago seleccionado: " + tipo + ", ID: " + id);
 
-    // Mostrar ambas opciones de pago (PSE y Efectivo) de forma independiente por sede
-    const efectivoPago = document.getElementById('efectivoPago' + id);
-    const psePago = document.getElementById('psePago' + id);
+                // Establecer el valor del tipo de pago
+                document.getElementById("tipoPago" + id).value = tipo;
 
-    // Asegurarse de que los elementos existen y restaurar su visibilidad
-    if (efectivoPago && psePago) {
-        // Eliminar la clase 'ocultar' para mostrar ambos pagos
-        efectivoPago.classList.remove('ocultar');
-        psePago.classList.remove('ocultar');
-    }
-}
-    
-      
+                // Mostrar el botón "Generar Reporte" cuando se seleccione un método de pago
+                document.getElementById('btnGenerar' + id).style.display = 'inline-block';
 
-     // Función para generar el reporte PDF
-    function generarReporte(id) {
-        const tipoPago = document.getElementById("tipoPago" + id).value;
+                // Ocultar la opción no seleccionada completamente
+                if (tipo === 'PSE') {
+                    // Ocultar el pago en efectivo
+                    document.getElementById('efectivoPago' + id).classList.add('ocultar');
+                    // Mostrar el pago en PSE si no está oculto
+                    document.getElementById('psePago' + id).classList.remove('ocultar');
 
-        if (tipoPago === "") {
-            alert("Por favor, seleccione una forma de pago antes de generar el reporte.");
-            return;
-        }
-
-        document.getElementById("formGenerarReporte" + id).submit();
-    }
+                    // Abrir una nueva ventana con la imagen en caso de ser pago PSE
+                    var ventanaPSE = window.open('', '_blank', 'width=400,height=400');
+                    ventanaPSE.document.write('<html><head><title>Imagen PSE</title></head><body>');
+                    ventanaPSE.document.write('<img src=" ../img/pse.png" style="width:100%; height:auto;">');
+                    ventanaPSE.document.write('</body></html>');
 
 
-           
+                } else if (tipo === 'Efectivo') {
+                    // Ocultar el pago PSE
+                    document.getElementById('psePago' + id).classList.add('ocultar');
+                    // Mostrar el pago en efectivo si no está oculto
+                    document.getElementById('efectivoPago' + id).classList.remove('ocultar');
+                }
+            }
+
+            // Función para restaurar ambas opciones de pago para una sede específica
+            function restaurarOpcionesPago(id) {
+                console.log("Restaurando opciones de pago para ID:", id);
+
+                // Mostrar ambas opciones de pago (PSE y Efectivo) de forma independiente por sede
+                const efectivoPago = document.getElementById('efectivoPago' + id);
+                const psePago = document.getElementById('psePago' + id);
+
+                // Asegurarse de que los elementos existen y restaurar su visibilidad
+                if (efectivoPago && psePago) {
+                    // Eliminar la clase 'ocultar' para mostrar ambos pagos
+                    efectivoPago.classList.remove('ocultar');
+                    psePago.classList.remove('ocultar');
+                }
+            }
+
+            // Función para generar el reporte PDF
+            function generarReporte(id) {
+                const tipoPago = document.getElementById("tipoPago" + id).value;
+
+                if (tipoPago === "") {
+                    alert("Por favor, seleccione una forma de pago antes de generar el reporte.");
+                    return;
+                }
+
+                document.getElementById("formGenerarReporte" + id).submit();
+            }
+
+
+
         </script>
-        
+
     </body>
 </html>
