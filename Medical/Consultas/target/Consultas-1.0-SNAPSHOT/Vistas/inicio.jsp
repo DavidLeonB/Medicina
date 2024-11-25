@@ -106,14 +106,7 @@
                         <input class="registrarse" type="submit" value="Iniciar Sesión" /> <!-- Botón de inicio de sesión -->
                     </form>
 
-                    <!-- Mensaje de error -->
-                    <c:if test="${not empty sessionScope.error}"> <!-- Verifica si hay un mensaje de error en la sesión -->
-                        <div class="error-message" id="error-message"> <!-- Contenedor del mensaje de error -->
-                            <p>${sessionScope.error}</p> <!-- Muestra el mensaje de error -->
-                            <button class="close-btn" onclick="closeMessage()">X</button> <!-- Botón para cerrar el mensaje -->
-                        </div>
-                        <c:remove var="error" scope="session" /> <!-- Limpia el mensaje de error después de mostrarlo -->
-                    </c:if>
+                    
 
                     <!-- Scripts de JavaScript -->
                     <script src="script.js"></script> <!-- Incluye un archivo JavaScript externo -->

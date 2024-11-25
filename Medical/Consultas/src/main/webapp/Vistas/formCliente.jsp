@@ -437,7 +437,7 @@
 
                         <!-- Sección de botones -->
                         <div class="consultas" style="text-align: center;">
-                            <input class="separar" type="button" value="Separar Medicamentos" id="btnSeparar<%= i%>" onclick="activarPagos('<%= i%>')" />
+                            <input class="separar" type="button" value="Pago Medicamentos" id="btnSeparar<%= i%>" onclick="activarPagos('<%= i%>')" />
                             <input class="generar" type="button" value="Generar Reporte" id="btnGenerar<%= i%>" style="display: none;" onclick="generarReporte('<%= i%>')" />
                         </div>
 

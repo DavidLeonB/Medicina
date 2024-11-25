@@ -98,16 +98,7 @@
     </head>
     <body>  
         
-        <%-- Mostrar mensaje de éxito si existe --%>
-    <c:if test="${not empty sessionScope.mensaje}">
-        <p>${sessionScope.mensaje}</p>
-        <c:remove var="mensaje" scope="session"/> <%-- Limpiar mensaje después de mostrar --%>
-    </c:if>
-
-    <%-- Mostrar mensaje de error si existe --%>
-    <c:if test="${not empty error}">
-        <p style="color: red;">${error}</p>
-    </c:if>
+      
         <div class="ErrorCredenciales">
             <div class="msjError">                
                 <h4>Usuario no está logueado.</h4>
