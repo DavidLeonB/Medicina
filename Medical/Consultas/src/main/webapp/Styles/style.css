@@ -122,6 +122,8 @@ select {
     background-color:  var(--aqua);
     border-top-right-radius:  20px;
     border-bottom-right-radius:  20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
 
 
@@ -343,6 +345,6 @@ select {
         width:  100%;
         padding:  20px;
         border-bottom-left-radius:  20px;
-        border-top-right-radius:  0px;
+        border-top-right-radius:  20px;
     }
 }
